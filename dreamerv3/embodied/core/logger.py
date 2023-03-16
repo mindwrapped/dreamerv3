@@ -235,7 +235,7 @@ class WandBOutput:
         project="dreamerv3",
         name=logdir.name,
         # sync_tensorboard=True,,
-        entity='word-bots',
+        entity='mindwrapped',
         config=dict(config),
     )
     self._wandb = wandb
@@ -263,7 +263,7 @@ class WandBOutput:
         # If the video is a float, convert it to uint8
         if np.issubdtype(value.dtype, np.floating):
           value = np.clip(255 * value, 0, 255).astype(np.uint8)
-        bystep[step][name] = wandb.Video(value)
+        bystep[step][name] = wandb.Video(value, fps=20)
 
     for step, metrics in bystep.items():
       self._wandb.log(metrics, step=step)
